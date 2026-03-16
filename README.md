@@ -40,7 +40,7 @@ this is SPA quiz game!
 Quiz Rules:
 1.To Start the quiz click the button at the bottom of the screen and the countdown screen begins giving you 3 seconds to get ready!
 
-<img src="./image-1.png" alt="Quiz Screenshot" width="200">
+![Quiz Screenshot](./image-1.png)
  
 2.The first out of ten Question will appear with a 5 second timer underneath the header to read AND answer the question.
 
