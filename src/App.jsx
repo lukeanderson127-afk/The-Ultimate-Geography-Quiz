@@ -3,6 +3,7 @@ import questions from "./questions";
 import Confetti from "react-confetti";
 import confetti from "canvas-confetti";
 
+
 function shuffleArray(array) {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -210,135 +211,134 @@ const App = () => {
   };
 
   return (
-    <>
-      <div
-        className={
-          score === shuffledQuestions.length && isFinished
-            ? "card-container perfect-score-container"
-            : "card-container"
-        }
-      >
-        <div className="header">
-          {!(isFinished && score === shuffledQuestions.length) && (
-            <h1>The Ultimate Geography Quiz!</h1>
-          )}
+  <>
+    <div
+      className={
+        score === shuffledQuestions.length && isFinished
+          ? "card-container perfect-score-container"
+          : "card-container"
+      }
+    >
+      <div className="header">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/512px-The_Earth_seen_from_Apollo_17.jpg"
+          alt="Earth"
+          className="globe-image"
+        />
 
-          {!quizStarted && !showCountdown && (
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/512px-The_Earth_seen_from_Apollo_17.jpg"
-              alt="Earth"
-              className="globe-image"
-            />
-          )}
+        {!(isFinished && score === shuffledQuestions.length) && (
+          <h1>The Ultimate Geography Quiz!</h1>
+        )}
 
-          {quizStarted && !isFinished && !showCountdown && (
-            <>
-              <p>
-                {currentQuestion + 1}: {currentQ.question}
-              </p>
-              <p className={`timer ${timer <= 2 ? "warning" : ""}`}>
-                ⏱️ Time left: {timer}s
-              </p>
-            </>
-          )}
+        {!quizStarted && !showCountdown && (
+          <p>Welcome! Click Start to begin the quiz.</p>
+        )}
 
-          {isFinished && (
-            <div
-              className={`results-message ${
-                score === shuffledQuestions.length ? "perfect-score" : ""
-              }`}
-            >
-              {score === shuffledQuestions.length && (
-                <div className="perfect-score-header">
-                  <h2>A Perfect Score!</h2>
-                  <h3>You Have Completed The Ultimate Geography Quiz!</h3>
+        {quizStarted && !isFinished && !showCountdown && (
+          <>
+            <p>
+              {currentQuestion + 1}: {currentQ.question}
+            </p>
+            <p className={`timer ${timer <= 2 ? "warning" : ""}`}>
+              ⏱️ Time left: {timer}s
+            </p>
+          </>
+        )}
 
-                  {/* ⏱️ NEW — Show seconds + milliseconds */}
-                  {totalTime && (
-                    <>
-                      <p className="completion-time">
-                        You Finished It In{" "}
-                        {totalTime.seconds}.
-                        {String(totalTime.milliseconds).padStart(3, "0")} seconds!
-                      </p>
+        {isFinished && (
+          <div
+            className={`results-message ${
+              score === shuffledQuestions.length ? "perfect-score" : ""
+            }`}
+          >
+            {score === shuffledQuestions.length && (
+              <div className="perfect-score-header">
+                <h2>A Perfect Score!</h2>
+                <h3>You Have Completed The Ultimate Geography Quiz!</h3>
 
-                      <p className="completion-speed">
-                        But can you do it faster?
-                      </p>
-                    </>
-                  )}
-                </div>
-              )}
+                {totalTime && (
+                  <>
+                    <p className="completion-time">
+                      You Finished It In {totalTime.seconds}.
+                      {String(totalTime.milliseconds).padStart(3, "0")} seconds!
+                    </p>
 
-              {score !== shuffledQuestions.length && (
-                <h2 className="nice-try">
-                  Nice try, but you didn’t get a perfect score — So Don’t Give Up!
-                </h2>
-              )}
+                    <p className="completion-speed">
+                      But can you do it faster?
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
 
-              <p>
-                Quiz Finished! Your Score: {score}/{shuffledQuestions.length}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {showCountdown && (
-          <div className="countdown-screen">
-            <h2>Get Ready…</h2>
-            <h1>{countdown}</h1>
+         {score !== shuffledQuestions.length && (
+  <>
+    
+    <h2 className="nice-try">Nice try, but you didn’t get a perfect score!</h2>
+    <h2 className="dont-give-up">So Don’t Give Up!</h2>
+  </>
+)}
+          <p>
+              Quiz Finished! Your Score: {score}/{shuffledQuestions.length}
+            </p>
           </div>
         )}
-
-        {showCelebration && (
-          <Confetti width={windowSize.width} height={windowSize.height} />
-        )}
-
-        {quizStarted && !showCountdown && !isFinished && (
-          <ul className="questions">
-            {shuffledOptions.map((optionObj, index) => {
-              let className = "";
-
-              if (isAnswered) {
-                if (selectedAnswer !== null && index === selectedAnswer) {
-                  className = optionObj.isCorrect ? "correct" : "incorrect";
-                }
-              }
-
-              return (
-                <li
-                  key={index}
-                  className={className}
-                  onClick={() => handleAnswerClick(index)}
-                >
-                  {optionObj.text}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
-        {!quizStarted && !showCountdown ? (
-          <button
-            onClick={() => {
-              setShowCountdown(true);
-              setCountdown(3);
-            }}
-          >
-            Start Quiz
-          </button>
-        ) : !isFinished && !showCountdown ? (
-          currentQuestion === shuffledQuestions.length - 1 ? (
-            <button onClick={handleNextClick}>Finish Quiz</button>
-          ) : (
-            <button onClick={handleNextClick}>Next Question</button>
-          )
-        ) : (
-          isFinished && <button onClick={handleReset}>Reset Quiz</button>
-        )}
       </div>
-    </>
-  );
-};
 
-export default App;
+      {showCountdown && (
+        <div className="countdown-screen">
+          <h2>Get Ready…</h2>
+          <h1>{countdown}</h1>
+        </div>
+      )}
+
+      {showCelebration && (
+        <Confetti width={windowSize.width} height={windowSize.height} />
+      )}
+
+      {quizStarted && !showCountdown && !isFinished && (
+        <ul className="questions">
+          {shuffledOptions.map((optionObj, index) => {
+            let className = "";
+
+            if (isAnswered) {
+              if (selectedAnswer !== null && index === selectedAnswer) {
+                className = optionObj.isCorrect ? "correct" : "incorrect";
+              }
+            }
+
+            return (
+              <li
+                key={index}
+                className={className}
+                onClick={() => handleAnswerClick(index)}
+              >
+                {optionObj.text}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {!quizStarted && !showCountdown ? (
+        <button
+          onClick={() => {
+            setShowCountdown(true);
+            setCountdown(3);
+          }}
+        >
+          Start Quiz
+        </button>
+      ) : !isFinished && !showCountdown ? (
+        currentQuestion === shuffledQuestions.length - 1 ? (
+          <button onClick={handleNextClick}>Finish Quiz</button>
+        ) : (
+          <button onClick={handleNextClick}>Next Question</button>
+        )
+      ) : (
+        isFinished && <button onClick={handleReset}>Reset Quiz</button>
+      )}
+    </div>
+  </>
+);
+};export default App;
